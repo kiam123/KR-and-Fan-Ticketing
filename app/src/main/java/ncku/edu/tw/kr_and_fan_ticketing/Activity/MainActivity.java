@@ -19,6 +19,7 @@ import java.util.List;
 
 import ncku.edu.tw.kr_and_fan_ticketing.Fragment.FavoriteFragment;
 import ncku.edu.tw.kr_and_fan_ticketing.Fragment.HomeFragment;
+import ncku.edu.tw.kr_and_fan_ticketing.Fragment.HomepageFragment;
 import ncku.edu.tw.kr_and_fan_ticketing.R;
 import ncku.edu.tw.kr_and_fan_ticketing.Widget.CustomViewPager;
 
@@ -30,11 +31,13 @@ public class MainActivity extends AppCompatActivity {
     final Integer[] ICONS = new Integer[]{
             R.drawable.ic_home_white_18dp,
             R.drawable.ic_favorite_white_18dp,
+            R.drawable.ic_account_circle_white_18dp
     };
 
     final Integer[] ICONS2 = new Integer[]{
             R.drawable.ic_home_black_18dp,
             R.drawable.ic_favorite_black_18dp,
+            R.drawable.ic_account_circle_black_18dp
     };
 
     @Override
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentArrayList = new ArrayList<Fragment>();
         fragmentArrayList.add(new HomeFragment());//主頁
         fragmentArrayList.add(new FavoriteFragment());//收藏
+        fragmentArrayList.add(new HomepageFragment());
     }
 
     //初始化每個view
@@ -59,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         titles = new ArrayList<>();//因為imageview不能比較，所以就用textview的方法來比較
         titles.add("One");
         titles.add("Two");
+        titles.add("Three");
 
         viewPager = (CustomViewPager) this.findViewById(R.id.viewpager);
 
@@ -73,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupTabIcons() {
         mTabLayout.getTabAt(0).setCustomView(getTabView(0));
         mTabLayout.getTabAt(1).setCustomView(getTabView(1));
+        mTabLayout.getTabAt(2).setCustomView(getTabView(2));
     }
 
     //自定義tab
@@ -123,6 +129,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (txt_title.getText().toString().equals("Two")) {
             Picasso.with(this).load(ICONS[1]).into(img_title);
             viewPager.setCurrentItem(1);
+        } else if (txt_title.getText().toString().equals("Three")) {
+            Picasso.with(this).load(ICONS[2]).into(img_title);
+            viewPager.setCurrentItem(2);
         }
     }
 
@@ -136,6 +145,8 @@ public class MainActivity extends AppCompatActivity {
             Picasso.with(this).load(ICONS2[0]).into(img_title);
         } else if (txt_title.getText().toString().equals("Two")) {
             Picasso.with(this).load(ICONS2[1]).into(img_title);
+        } else if (txt_title.getText().toString().equals("Three")) {
+            Picasso.with(this).load(ICONS2[2]).into(img_title);
         }
     }
 
