@@ -15,3 +15,5 @@
 \.idea/encodings\.xml
 
 \.idea/codeStyles/Project\.xml
+
+app/google-services\.json
