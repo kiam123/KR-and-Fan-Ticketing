@@ -54,7 +54,7 @@ public class SearchActivity extends AppCompatActivity {
         dst = intent.getStringExtra("dst");
 
         //
-        user = "guest";
+        user = MainActivity.userName;
 
         // get firebase
         db = FirebaseFirestore.getInstance();

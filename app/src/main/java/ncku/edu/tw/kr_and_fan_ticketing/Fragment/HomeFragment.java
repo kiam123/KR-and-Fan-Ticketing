@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import ncku.edu.tw.kr_and_fan_ticketing.Activity.MainActivity;
 import ncku.edu.tw.kr_and_fan_ticketing.Activity.SearchActivity;
 import ncku.edu.tw.kr_and_fan_ticketing.R;
 
@@ -32,6 +34,12 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
         initView(viewGroup);
+        TextView tv_name = viewGroup.findViewById(R.id.tv_name);
+        String nameFormat = "Account : " + MainActivity.userName;
+        if (MainActivity.userName == "guest") {
+            nameFormat = nameFormat + " (You can change it on profile page)";
+        }
+        tv_name.setText(nameFormat);
 
         return viewGroup;
     }

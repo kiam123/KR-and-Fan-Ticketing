@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Fragment> fragmentArrayList;
     private TabLayout mTabLayout;
     private List<String> titles;
+    public static String userName;
     final Integer[] ICONS = new Integer[]{
             R.drawable.ic_home_white_18dp,
             R.drawable.ic_favorite_white_18dp,
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         View decorView = getWindow().getDecorView();
+        userName = "guest";
 
         initFragment();
         initView();
