@@ -46,8 +46,8 @@ public class FavoriteFragment extends Fragment {
         mFavoriteAdapter = new FavoriteAdapter(getActivity(), mFavoriteItems);
         mFavoriteRecyclerView.setAdapter(mFavoriteAdapter);
 
-        mFavoriteItems.add(new FavoriteItem("Qatar Air","$600","DAC","SIN","17:40","23:30"));
-        mFavoriteItems.add(new FavoriteItem("Biman B.","$520","DAC","SIN","17:40","23:30"));
+        mFavoriteItems.add(new FavoriteItem("Qatar Air","$600","DAC","SIN","17:40","23:30","$100","$500"));
+        mFavoriteItems.add(new FavoriteItem("Biman B.","$520","DAC","SIN","17:40","23:30","$200","$700"));
         mFavoriteAdapter.notifyDataSetChanged();
     }
 

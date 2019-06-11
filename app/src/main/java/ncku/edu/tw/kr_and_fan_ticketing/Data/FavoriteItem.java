@@ -7,14 +7,18 @@ public class FavoriteItem {
     String mToCountry;
     String mFromTime;
     String mToTime;
+    String mFromRangePrice;
+    String mToRangePrice;
 
-    public FavoriteItem(String mAirName, String mPrice, String mFromCountry, String mToCountry, String mFromTime, String mToTime) {
+    public FavoriteItem(String mAirName, String mPrice, String mFromCountry, String mToCountry, String mFromTime, String mToTime, String mFromRangePrice, String mToRangePrice) {
         this.mAirName = mAirName;
         this.mPrice = mPrice;
         this.mFromCountry = mFromCountry;
         this.mToCountry = mToCountry;
         this.mFromTime = mFromTime;
         this.mToTime = mToTime;
+        this.mFromRangePrice = mFromRangePrice;
+        this.mToRangePrice = mToRangePrice;
     }
 
     public String getmAirName() {
@@ -39,5 +43,13 @@ public class FavoriteItem {
 
     public String getmToTime() {
         return mToTime;
+    }
+
+    public String getmFromRangePrice() {
+        return mFromRangePrice;
+    }
+
+    public String getmToRangePrice() {
+        return mToRangePrice;
     }
 }

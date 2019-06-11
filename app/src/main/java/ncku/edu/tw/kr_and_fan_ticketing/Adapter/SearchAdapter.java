@@ -5,6 +5,9 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import ncku.edu.tw.kr_and_fan_ticketing.Data.SearchItem;
+import ncku.edu.tw.kr_and_fan_ticketing.Fragment.SearchSubscriptionDiaglogFragment;
 import ncku.edu.tw.kr_and_fan_ticketing.R;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
@@ -77,7 +81,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(mContext,"yes",Toast.LENGTH_LONG).show();
+            SearchSubscriptionDiaglogFragment searchSubscriptionDiaglogFragment = new SearchSubscriptionDiaglogFragment();
+            searchSubscriptionDiaglogFragment.show(((AppCompatActivity)mContext).getSupportFragmentManager(), "search");
         }
     }
 }
