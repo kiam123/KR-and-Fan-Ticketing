@@ -54,7 +54,7 @@ public class SearchActivity extends AppCompatActivity {
         dst = intent.getStringExtra("dst");
 
         //
-        user = "developer";
+        user = "guest";
 
         // get firebase
         db = FirebaseFirestore.getInstance();
@@ -90,12 +90,15 @@ public class SearchActivity extends AppCompatActivity {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             Log.d("db", "db has result:" + searchPath  + id);
+                            mSearchItems.add(new SearchItem("Wait for database...","","","","",""));
+                            searchAdapter.notifyDataSetChanged();
                             db.collection(showPath)
                                     .get()
                                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                         @Override
                                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                             if (task.isSuccessful()) {
+                                                mSearchItems.remove(0);
                                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                                     Log.d("db", document.get("plane").toString());
                                                     String plane = document.get("plane").toString();
@@ -104,6 +107,7 @@ public class SearchActivity extends AppCompatActivity {
                                                     String landTime = document.get("landTime").toString();
                                                     mSearchItems.add(new SearchItem(plane,price,ori,dst,flyTime,landTime));
                                                 }
+                                                Log.d("db","search finished");
                                                 searchAdapter.notifyDataSetChanged();
                                             } else {
                                                 Log.d("db", "Error getting documents: ");
@@ -111,8 +115,17 @@ public class SearchActivity extends AppCompatActivity {
                                         }
                                     });
                         } else {
+
+                            mSearchItems.add(new SearchItem("Send query to server","","turn back after few minute","","",""));
+                            searchAdapter.notifyDataSetChanged();
                             Log.d("db", "No such document:" + searchPath  + id);
                             Log.d("state","query : " + id);
+
+                            Map<String, Object> exist = new HashMap<>();
+                            exist.put("exist", true);
+                            db.collection("/user/").document(user)
+                                    .set(exist);
+
                             db.collection(path).document(id)
                                     .set(query)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
