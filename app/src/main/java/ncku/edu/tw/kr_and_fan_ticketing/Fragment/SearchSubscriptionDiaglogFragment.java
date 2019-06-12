@@ -24,7 +24,6 @@ import ncku.edu.tw.kr_and_fan_ticketing.Activity.MainActivity;
 import ncku.edu.tw.kr_and_fan_ticketing.Data.SearchCallBack;
 import ncku.edu.tw.kr_and_fan_ticketing.Data.SearchItem;
 import ncku.edu.tw.kr_and_fan_ticketing.R;
-import ncku.edu.tw.kr_and_fan_ticketing.Service.SearchHelper;
 
 public class SearchSubscriptionDiaglogFragment extends DialogFragment {
     public SearchCallBack searchCallBack;
@@ -60,7 +59,6 @@ public class SearchSubscriptionDiaglogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int id)
             {
-                SearchHelper searchHelper = new SearchHelper(getActivity());
 
                 if(edtFromPrice.getText().toString().trim().equals("") && edtToPrice.getText().toString().trim().equals("")) {
                     Toast.makeText(getActivity(), "Please input price", Toast.LENGTH_LONG).show();

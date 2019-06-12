@@ -30,7 +30,6 @@ import ncku.edu.tw.kr_and_fan_ticketing.Adapter.SearchAdapter;
 import ncku.edu.tw.kr_and_fan_ticketing.Data.SearchCallBack;
 import ncku.edu.tw.kr_and_fan_ticketing.Data.SearchItem;
 import ncku.edu.tw.kr_and_fan_ticketing.R;
-import ncku.edu.tw.kr_and_fan_ticketing.Service.SearchHelper;
 
 public class SearchActivity extends AppCompatActivity implements SearchCallBack {
     RecyclerView SearchRecyclerView;
@@ -108,19 +107,7 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
                                                     String landTime = document.get("landTime").toString();
                                                     String date = document.get("date").toString();
 
-                                                    SearchHelper searchHelper = new SearchHelper(SearchActivity.this);
-                                                    Cursor cus = searchHelper.getAllData(plane, ori, dst, flyTime, landTime);
-                                                    if(cus.getCount() > 1){
-                                                        while(cus.moveToNext()) {
-                                                            Log.v("ttt", cus.getString(0)+" "+plane);
-                                                            Log.v("ttt", cus.getString(1)+" "+plane);
-                                                            Log.v("ttt", cus.getString(2)+" "+plane);
-                                                            Log.v("ttt", cus.getString(3)+" "+plane);
-                                                            Log.v("ttt", cus.getString(4)+" "+plane);
-                                                        }
-                                                    }
-
-                                                    mSearchItems.add(new SearchItem(plane,date, price, ori, dst, flyTime, landTime, false));
+                                                    mSearchItems.add(new SearchItem(plane, date, price, ori, dst, flyTime, landTime, false));
                                                 }
                                                 Log.d("db","search finished");
                                                 searchAdapter.notifyDataSetChanged();

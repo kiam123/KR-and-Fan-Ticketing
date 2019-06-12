@@ -1,7 +1,10 @@
 package ncku.edu.tw.kr_and_fan_ticketing.Fragment;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -24,6 +27,7 @@ public class HomeFragment extends Fragment {
 
     Intent intent;
 
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -40,6 +44,7 @@ public class HomeFragment extends Fragment {
             nameFormat = nameFormat + " (You can change it on profile page)";
         }
         tv_name.setText(nameFormat);
+
 
         return viewGroup;
     }
@@ -68,5 +73,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
 
 }
