@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         initView();
     }
 
-    //初始化每個頁面的fragment（部落格，記錄食物，待吃，個人主頁）
+    //初始化每個頁面的fragment
     private void initFragment() {
         fragmentArrayList = new ArrayList<Fragment>();
         fragmentArrayList.add(new HomeFragment());//主頁

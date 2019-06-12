@@ -72,6 +72,7 @@ public class HomepageFragment extends Fragment {
                                 currentName = "Current account : " + MainActivity.userName;
                                 tv_current.setText(currentName);
                                 tv_changeText.setText("User ckecked !");
+                                FavoriteFragment.showSubscribe();
                             }
                         });
             }
