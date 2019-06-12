@@ -91,7 +91,7 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             Log.d("db", "db has result:" + searchPath  + id);
-                            mSearchItems.add(new SearchItem("Wait for database...","","","","","",false));
+                            mSearchItems.add(new SearchItem("Wait for database...","","","","","","",false));
                             searchAdapter.notifyDataSetChanged();
                             db.collection(showPath)
                                     .get()
@@ -106,6 +106,7 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
                                                     String price = document.get("price").toString();
                                                     String flyTime = document.get("flyTime").toString();
                                                     String landTime = document.get("landTime").toString();
+                                                    String date = document.get("date").toString();
 
                                                     SearchHelper searchHelper = new SearchHelper(SearchActivity.this);
                                                     Cursor cus = searchHelper.getAllData(plane, ori, dst, flyTime, landTime);
@@ -119,7 +120,7 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
                                                         }
                                                     }
 
-                                                    mSearchItems.add(new SearchItem(plane, price, ori, dst, flyTime, landTime, false));
+                                                    mSearchItems.add(new SearchItem(plane,date, price, ori, dst, flyTime, landTime, false));
                                                 }
                                                 Log.d("db","search finished");
                                                 searchAdapter.notifyDataSetChanged();
@@ -130,7 +131,7 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
                                     });
                         } else {
 
-                            mSearchItems.add(new SearchItem("Send query to server","","turn back after few minute","","","",false));
+                            mSearchItems.add(new SearchItem("Send query to server","","","turn back after few minute","","","",false));
                             searchAdapter.notifyDataSetChanged();
                             Log.d("db", "No such document:" + searchPath  + id);
                             Log.d("state","query : " + id);
@@ -156,8 +157,8 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
                 }
             });
         } else {
-            mSearchItems.add(new SearchItem("Qatar Air", "$600", "DAC", "SIN", "17:40", "23:30", false));
-            mSearchItems.add(new SearchItem("Biman B.", "$520", "DAC", "SIN", "17:40", "23:30", false));
+            mSearchItems.add(new SearchItem("Qatar Air","", "$600", "DAC", "SIN", "17:40", "23:30", false));
+            mSearchItems.add(new SearchItem("Biman B.","", "$520", "DAC", "SIN", "17:40", "23:30", false));
         }
         searchAdapter.notifyDataSetChanged();
     }

@@ -66,7 +66,6 @@ public class FavoriteFragment extends Fragment {
         mFavoriteItems.clear();
         db = FirebaseFirestore.getInstance();
         String subPath = "/user/" + MainActivity.userName + "/subscribe";
-        showPath = "/searchResult/";
         db.collection(subPath)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -79,6 +78,7 @@ public class FavoriteFragment extends Fragment {
                                 String flyTime = document.get("flyTime").toString();
                                 String target = document.get("target").toString();
 
+                                Log.d("db in favorite",target);
                                 searchSubinDb(target,plane,flyTime);
                             }
                             mFavoriteAdapter.notifyDataSetChanged();
@@ -91,7 +91,8 @@ public class FavoriteFragment extends Fragment {
 
     }
     public static void searchSubinDb(String target, final String subPlane, final String subFlyTime){
-        showPath = showPath + target + "/tickets";
+        showPath = "/searchResult/" + target + "/tickets";
+        Log.d("db in favor",showPath);
         db.collection(showPath)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -108,10 +109,10 @@ public class FavoriteFragment extends Fragment {
                                     String dst = document.get("dst").toString();
                                     mFavoriteItems.add(new FavoriteItem(plane,price,ori,dst,flyTime,landTime,"$100","$500"));
                                     mFavoriteAdapter.notifyDataSetChanged();
-                                    Log.d("debug","here");
+//                                    Log.d("debug","here");
                                 }
-                                Log.d("debug",document.get("plane").toString()+document.get("flyTime").toString());
-                                Log.d("debug","here?"+subPlane+subFlyTime);
+//                                Log.d("debug",document.get("plane").toString()+document.get("flyTime").toString());
+//                                Log.d("debug","here?"+subPlane+subFlyTime);
                             }
                             Log.d("db in search","finished");
                         } else {

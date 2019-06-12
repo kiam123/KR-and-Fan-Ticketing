@@ -9,10 +9,12 @@ public class SearchItem implements Serializable {
     String mToCountry;
     String mFromTime;
     String mToTime;
+    String mDate;
     boolean mSubscription;
 
-    public SearchItem(String mAirName, String mPrice, String mFromCountry, String mToCountry, String mFromTime, String mToTime, boolean mSubscription) {
+    public SearchItem(String mAirName,String mdate, String mPrice, String mFromCountry, String mToCountry, String mFromTime, String mToTime, boolean mSubscription) {
         this.mAirName = mAirName;
+        this.mDate = mdate;
         this.mPrice = mPrice;
         this.mFromCountry = mFromCountry;
         this.mToCountry = mToCountry;
@@ -23,6 +25,10 @@ public class SearchItem implements Serializable {
 
     public String getmAirName() {
         return mAirName;
+    }
+
+    public String getmDate() {
+        return mDate;
     }
 
     public String getmPrice() {
@@ -44,6 +50,8 @@ public class SearchItem implements Serializable {
     public String getmToTime() {
         return mToTime;
     }
+
+    public String getmId() {return mFromCountry + mToCountry + mDate + mAirName + mFromTime;}
 
     public boolean ismSubscription() {
         return mSubscription;

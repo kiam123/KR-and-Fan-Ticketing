@@ -88,7 +88,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             } else{
                 imageView.setImageResource(R.drawable.subscription);
             }
-            mSearchItem = new SearchItem(mAirName.getText().toString(), mPrice.getText().toString(), mFromCountry.getText().toString(),
+            mSearchItem = new SearchItem(mAirName.getText().toString(),searchItem.getmDate(), mPrice.getText().toString(), mFromCountry.getText().toString(),
                     mToCountry.getText().toString(), mFromTime.getText().toString(), mToTime.getText().toString(), searchItem.ismSubscription());
         }
 
