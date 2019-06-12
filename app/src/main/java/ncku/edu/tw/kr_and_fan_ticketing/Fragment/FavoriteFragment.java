@@ -13,17 +13,19 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import javax.annotation.Nullable;
 
 import ncku.edu.tw.kr_and_fan_ticketing.Activity.MainActivity;
 import ncku.edu.tw.kr_and_fan_ticketing.Adapter.FavoriteAdapter;
-import ncku.edu.tw.kr_and_fan_ticketing.Adapter.SearchAdapter;
 import ncku.edu.tw.kr_and_fan_ticketing.Data.FavoriteItem;
-import ncku.edu.tw.kr_and_fan_ticketing.Data.SearchItem;
 import ncku.edu.tw.kr_and_fan_ticketing.R;
 
 /**
@@ -35,6 +37,7 @@ public class FavoriteFragment extends Fragment {
     static ArrayList<FavoriteItem> mFavoriteItems;
     static String showPath = "";
     static FirebaseFirestore db;
+    static ListenerRegistration registration;
 
     public FavoriteFragment() {}
 
@@ -59,67 +62,65 @@ public class FavoriteFragment extends Fragment {
 //        mFavoriteItems.add(new FavoriteItem("Qatar Air","$600","DAC","SIN","17:40","23:30","$100","$500"));
 //        mFavoriteItems.add(new FavoriteItem("Biman B.","$520","DAC","SIN","17:40","23:30","$200","$700"));
 //        mFavoriteAdapter.notifyDataSetChanged();
-        showSubscribe();
+//        ckeckSubscribe();
+        dbListener();
     }
 
-    public static void showSubscribe(){
-        mFavoriteItems.clear();
+
+    public static void dbListener(){
         db = FirebaseFirestore.getInstance();
-        String subPath = "/user/" + MainActivity.userName + "/subscribe";
-        db.collection(subPath)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("db in sub", document.getId());
-                                String plane = document.get("plane").toString();
-                                String flyTime = document.get("flyTime").toString();
-                                String target = document.get("target").toString();
-
-                                Log.d("db in favorite",target);
-                                searchSubinDb(target,plane,flyTime);
-                            }
-                            mFavoriteAdapter.notifyDataSetChanged();
-                            Log.d("db in sub","search sub finished");
-                        } else {
-                            Log.d("db in sub", "Error getting documents: ");
-                        }
+        final String path = "user/" + MainActivity.userName + "/subscribe";
+        registration = db.collection(path)
+            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+                        Log.d("dbListener", "Listen failed.");
+                        return;
                     }
-                });
+                    Log.d("dbListener", "change~" + MainActivity.userName);
 
-    }
-    public static void searchSubinDb(String target, final String subPlane, final String subFlyTime){
-        showPath = "/searchResult/" + target + "/tickets";
-        Log.d("db in favor",showPath);
-        db.collection(showPath)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (document.get("plane").toString().equals(subPlane) && document.get("flyTime").toString().equals(subFlyTime)){
-                                    String plane = document.get("plane").toString();
-                                    String price = document.get("price").toString();
-                                    String flyTime = document.get("flyTime").toString();
-                                    String landTime = document.get("landTime").toString();
-                                    String ori = document.get("ori").toString();
-                                    String dst = document.get("dst").toString();
-                                    mFavoriteItems.add(new FavoriteItem(plane,price,ori,dst,flyTime,landTime,"$100","$500"));
-                                    mFavoriteAdapter.notifyDataSetChanged();
-//                                    Log.d("debug","here");
+                    mFavoriteItems.clear();
+//                    for (QueryDocumentSnapshot doc : value) {
+//                        if (doc.getId() != null) {
+//                            Log.d("dbListener",doc.getId());
+//                            setItems(doc);
+//                        }
+//                    }
+
+                    db.collection(path)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()){
+                                        for (QueryDocumentSnapshot doc : task.getResult()) {
+                                            Log.d("dbListener",doc.getId());
+                                            setItems(doc);
+                                        }
+                                    }
                                 }
-//                                Log.d("debug",document.get("plane").toString()+document.get("flyTime").toString());
-//                                Log.d("debug","here?"+subPlane+subFlyTime);
-                            }
-                            Log.d("db in search","finished");
-                        } else {
-                            Log.d("db in search", "Error getting documents: ");
-                        }
-                    }
-                });
+                            });
+                }
+
+                public void setItems(QueryDocumentSnapshot doc){
+                    String plane = doc.get("plane").toString();
+                    String price = doc.get("price").toString();
+                    String flyTime = doc.get("flyTime").toString();
+                    String landTime = doc.get("landTime").toString();
+                    String ori = doc.get("ori").toString();
+                    String dst = doc.get("dst").toString();
+                    String fromPrice = doc.get("fromPrice").toString();
+                    String toPrice = doc.get("toPrice").toString();
+                    mFavoriteItems.add(new FavoriteItem(plane,price,ori,dst,flyTime,landTime,fromPrice,toPrice));
+                    mFavoriteAdapter.notifyDataSetChanged();
+                }
+            });
     }
 
+    public static void removeSnapListener(){
+        mFavoriteItems.clear();
+        mFavoriteAdapter.notifyDataSetChanged();
+        registration.remove();
+    }
 }

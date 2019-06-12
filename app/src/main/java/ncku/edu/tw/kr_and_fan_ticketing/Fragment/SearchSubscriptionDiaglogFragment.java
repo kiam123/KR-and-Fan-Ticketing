@@ -28,6 +28,7 @@ import ncku.edu.tw.kr_and_fan_ticketing.Service.SearchHelper;
 
 public class SearchSubscriptionDiaglogFragment extends DialogFragment {
     public SearchCallBack searchCallBack;
+    SearchItem searchItem;
 
     public static SearchSubscriptionDiaglogFragment newInstance(SearchItem searchItem) {
         SearchSubscriptionDiaglogFragment searchSubscriptionDiaglogFragment = new SearchSubscriptionDiaglogFragment();
@@ -47,7 +48,7 @@ public class SearchSubscriptionDiaglogFragment extends DialogFragment {
 
         final EditText edtFromPrice;
         final EditText edtToPrice;
-        final SearchItem searchItem = (SearchItem) getArguments().getSerializable("SearchItem");
+        searchItem = (SearchItem) getArguments().getSerializable("SearchItem");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -66,16 +67,17 @@ public class SearchSubscriptionDiaglogFragment extends DialogFragment {
                     return;
                 }
 
-                boolean flag = searchHelper.insertData(searchItem.getmAirName(), searchItem.getmFromCountry(), searchItem.getmToCountry(),
-                        searchItem.getmFromTime(), searchItem.getmToTime(), searchItem.getmPrice(), edtFromPrice.getText().toString(),
-                        edtToPrice.getText().toString());
+//                boolean flag = searchHelper.insertData(searchItem.getmAirName(), searchItem.getmFromCountry(), searchItem.getmToCountry(),
+//                        searchItem.getmFromTime(), searchItem.getmToTime(), searchItem.getmPrice(), edtFromPrice.getText().toString(),
+//                        edtToPrice.getText().toString());
                 String fromPrice = edtFromPrice.getText().toString();
                 String toPrice = edtToPrice.getText().toString();
                 toDatabase(searchItem,fromPrice,toPrice);
 
-                if(flag == true) {
-                    Toast.makeText(getActivity(), "insert", Toast.LENGTH_LONG).show();
-                }
+//                if(flag == true) {
+                Log.d("search",searchItem.getmId());
+                Toast.makeText(getActivity(), "insert", Toast.LENGTH_LONG).show();
+//                }
                 searchCallBack.callbackFragment();
             }
         }).setNegativeButton("取消", null);
@@ -111,8 +113,10 @@ public class SearchSubscriptionDiaglogFragment extends DialogFragment {
         inputQuery.put("ori", searchItem.getmFromCountry());
         inputQuery.put("dst", searchItem.getmToCountry());
         inputQuery.put("flyTime",searchItem.getmFromTime());
+        inputQuery.put("landTime",searchItem.getmToTime());
         inputQuery.put("plane",searchItem.getmAirName());
         inputQuery.put("target",target);
+        inputQuery.put("price",searchItem.getmPrice());
         return inputQuery;
     }
 }

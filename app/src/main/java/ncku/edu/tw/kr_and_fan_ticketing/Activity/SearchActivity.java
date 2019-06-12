@@ -99,7 +99,7 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
                                         @Override
                                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                             if (task.isSuccessful()) {
-                                                mSearchItems.remove(0);
+                                                mSearchItems.clear();
                                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                                     Log.d("db", document.get("plane").toString());
                                                     String plane = document.get("plane").toString();
