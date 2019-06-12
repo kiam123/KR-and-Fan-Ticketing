@@ -10,6 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import ncku.edu.tw.kr_and_fan_ticketing.Activity.MainActivity;
 import ncku.edu.tw.kr_and_fan_ticketing.R;
 
@@ -20,7 +26,7 @@ public class HomepageFragment extends Fragment {
 
     String currentName;
     EditText edit_name;
-    TextView tv_current;
+    TextView tv_current,tv_changeText;
 
     public HomepageFragment() {
         // Required empty public constructor
@@ -39,6 +45,8 @@ public class HomepageFragment extends Fragment {
 
     public void initView(ViewGroup viewGroup){
         tv_current = viewGroup.findViewById(R.id.tv_current);
+        tv_changeText = viewGroup.findViewById(R.id.tv_changeText);
+        tv_changeText.setText("");
         currentName = "Current account : " + MainActivity.userName;
         tv_current.setText(currentName);
 
@@ -49,8 +57,23 @@ public class HomepageFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 MainActivity.userName = edit_name.getText().toString();
-                currentName = "Current account : " + MainActivity.userName;
-                tv_current.setText(currentName);
+
+                tv_changeText.setText("Waiting for database...");
+
+                // check database
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                Map<String, Object> exist = new HashMap<>();
+                exist.put("exist",true);
+                db.collection("/user/").document(MainActivity.userName)
+                        .set(exist)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                currentName = "Current account : " + MainActivity.userName;
+                                tv_current.setText(currentName);
+                                tv_changeText.setText("User ckecked !");
+                            }
+                        });
             }
         });
 

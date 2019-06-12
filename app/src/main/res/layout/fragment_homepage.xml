@@ -27,10 +27,21 @@
         android:inputType="textPersonName"
         android:text="guest" />
 
-    <Button
-        android:id="@+id/btn_change"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Change" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change" />
+
+        <TextView
+            android:id="@+id/tv_changeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </LinearLayout>

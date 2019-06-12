@@ -33,7 +33,6 @@ public class SearchActivity extends AppCompatActivity {
     ArrayList<SearchItem> mSearchItems;
     Map<String,String> query;
     FirebaseFirestore db;
-    String user;
     String date,ori,dst,id,path;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +51,6 @@ public class SearchActivity extends AppCompatActivity {
         date = intent.getStringExtra("date");
         ori = intent.getStringExtra("ori");
         dst = intent.getStringExtra("dst");
-
-        //
-        user = MainActivity.userName;
 
         // get firebase
         db = FirebaseFirestore.getInstance();
@@ -76,7 +72,7 @@ public class SearchActivity extends AppCompatActivity {
             // set path
             final String searchPath = "/searchResult/";
             final String showPath = "/searchResult/" + id + "/tickets/";
-            path = "/user/" + user + "/query/";
+            path = "/query/";
 
 
             query = getQuery(date,ori,dst);
@@ -120,11 +116,6 @@ public class SearchActivity extends AppCompatActivity {
                             searchAdapter.notifyDataSetChanged();
                             Log.d("db", "No such document:" + searchPath  + id);
                             Log.d("state","query : " + id);
-
-                            Map<String, Object> exist = new HashMap<>();
-                            exist.put("exist", true);
-                            db.collection("/user/").document(user)
-                                    .set(exist);
 
                             db.collection(path).document(id)
                                     .set(query)
