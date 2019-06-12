@@ -110,7 +110,7 @@ public class SearchSubscriptionDiaglogFragment extends DialogFragment {
         inputQuery.put("date", searchItem.getmDate());
         inputQuery.put("ori", searchItem.getmFromCountry());
         inputQuery.put("dst", searchItem.getmToCountry());
-        inputQuery.put("flyTime",searchItem.getmToTime());
+        inputQuery.put("flyTime",searchItem.getmFromTime());
         inputQuery.put("plane",searchItem.getmAirName());
         inputQuery.put("target",target);
         return inputQuery;
