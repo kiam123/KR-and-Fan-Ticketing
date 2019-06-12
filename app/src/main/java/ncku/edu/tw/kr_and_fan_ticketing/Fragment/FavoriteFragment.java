@@ -63,6 +63,11 @@ public class FavoriteFragment extends Fragment {
 //        mFavoriteItems.add(new FavoriteItem("Biman B.","$520","DAC","SIN","17:40","23:30","$200","$700"));
 //        mFavoriteAdapter.notifyDataSetChanged();
 //        ckeckSubscribe();
+        if(registration != null) {
+            Log.d("registration","need remove");
+            removeSnapListener();
+        }
+        mFavoriteItems.clear();
         dbListener();
     }
 
