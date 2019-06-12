@@ -91,7 +91,7 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             Log.d("db", "db has result:" + searchPath  + id);
-                            mSearchItems.add(new SearchItem("Wait for database...","","","","",""));
+                            mSearchItems.add(new SearchItem("Wait for database...","","","","","",false));
                             searchAdapter.notifyDataSetChanged();
                             db.collection(showPath)
                                     .get()
@@ -130,7 +130,7 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
                                     });
                         } else {
 
-                            mSearchItems.add(new SearchItem("Send query to server","","turn back after few minute","","",""));
+                            mSearchItems.add(new SearchItem("Send query to server","","turn back after few minute","","","",false));
                             searchAdapter.notifyDataSetChanged();
                             Log.d("db", "No such document:" + searchPath  + id);
                             Log.d("state","query : " + id);
