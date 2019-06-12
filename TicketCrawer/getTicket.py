@@ -79,15 +79,31 @@ def initDatabase():
     db = firestore.client()
     return db
 
+def SearchQuery():
+    path = "query"
+    querys = db.collection(path).get()
+    i = 0
+    for query in querys:
+        print (query.id)
+        date = query.get("date")
+        ori = query.get("ori")
+        dst = query.get("dst")
+        target = ori + dst + date 
+
+        #print (target)
+
+        soup = getPageSource(ori,dst,date)
+        getData(soup,target,db)
+
 if __name__ == '__main__': 
-    # res = requests.get('https://www.google.com/flights?hl=zh-TW#flt=TPE.GUM.2019-06-25*GUM.TPE.2019-06-29;c:TWD;e:1;sd:1;t:f')
     db = initDatabase()
-    ori = "TPE"
-    dst = "KUL"
-    date = "2019-07-11"
-    target = ori + dst + date 
-    soup = getPageSource(ori,dst,date)
-    getData(soup,target,db)
+    # ori = "TPE"
+    # dst = "KUL"
+    # date = "2019-07-11"
+    # target = ori + dst + date 
+    # soup = getPageSource(ori,dst,date)
+    # getData(soup,target,db)
+    SearchQuery()
 
 
     
