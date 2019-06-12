@@ -38,7 +38,6 @@ public class FavoriteFragment extends Fragment {
     }
 
     public void initView(ViewGroup viewGroup){
-
         mFavoriteRecyclerView = (RecyclerView) viewGroup.findViewById(R.id.recyclerview);
         mFavoriteRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mFavoriteItems = new ArrayList<>();

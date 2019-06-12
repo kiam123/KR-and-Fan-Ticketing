@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import ncku.edu.tw.kr_and_fan_ticketing.Activity.SearchActivity;
+import ncku.edu.tw.kr_and_fan_ticketing.Data.SearchCallBack;
 import ncku.edu.tw.kr_and_fan_ticketing.Data.SearchItem;
 import ncku.edu.tw.kr_and_fan_ticketing.Fragment.SearchSubscriptionDiaglogFragment;
 import ncku.edu.tw.kr_and_fan_ticketing.R;
@@ -25,6 +27,7 @@ import ncku.edu.tw.kr_and_fan_ticketing.R;
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     Context mContext;
     ArrayList<SearchItem> mSearchItems;
+    SearchItem mSearchItem;
 
     public SearchAdapter(Context context, ArrayList<SearchItem> searchItems) {
         this.mContext = context;
@@ -56,6 +59,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         TextView mToCountry;
         TextView mFromTime;
         TextView mToTime;
+        ImageView imageView;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -66,6 +70,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             mToCountry = itemView.findViewById(R.id.to_country);
             mFromTime = itemView.findViewById(R.id.from_time);
             mToTime = itemView.findViewById(R.id.to_time);
+            imageView = itemView.findViewById(R.id.imageView);
 
             itemView.setOnClickListener(this);
         }
@@ -77,11 +82,19 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             mToCountry.setText(searchItem.getmToCountry());
             mFromTime.setText(searchItem.getmFromTime());
             mToTime.setText(searchItem.getmToTime());
+
+            if(!searchItem.ismSubscription()) {
+                imageView.setImageResource(R.drawable.no_subscription);
+            } else{
+                imageView.setImageResource(R.drawable.subscription);
+            }
+            mSearchItem = new SearchItem(mAirName.getText().toString(), mPrice.getText().toString(), mFromCountry.getText().toString(),
+                    mToCountry.getText().toString(), mFromTime.getText().toString(), mToTime.getText().toString(), searchItem.ismSubscription());
         }
 
         @Override
         public void onClick(View view) {
-            SearchSubscriptionDiaglogFragment searchSubscriptionDiaglogFragment = new SearchSubscriptionDiaglogFragment();
+            SearchSubscriptionDiaglogFragment searchSubscriptionDiaglogFragment = SearchSubscriptionDiaglogFragment.newInstance(mSearchItem);
             searchSubscriptionDiaglogFragment.show(((AppCompatActivity)mContext).getSupportFragmentManager(), "search");
         }
     }

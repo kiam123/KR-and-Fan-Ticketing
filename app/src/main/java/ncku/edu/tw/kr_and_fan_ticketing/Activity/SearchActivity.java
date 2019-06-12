@@ -1,13 +1,16 @@
 package ncku.edu.tw.kr_and_fan_ticketing.Activity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -24,14 +27,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ncku.edu.tw.kr_and_fan_ticketing.Adapter.SearchAdapter;
+import ncku.edu.tw.kr_and_fan_ticketing.Data.SearchCallBack;
 import ncku.edu.tw.kr_and_fan_ticketing.Data.SearchItem;
 import ncku.edu.tw.kr_and_fan_ticketing.R;
+import ncku.edu.tw.kr_and_fan_ticketing.Service.SearchHelper;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements SearchCallBack {
     RecyclerView SearchRecyclerView;
     SearchAdapter searchAdapter;
     ArrayList<SearchItem> mSearchItems;
-    Map<String,String> query;
+    Map<String, String> query;
     FirebaseFirestore db;
     String date,ori,dst,id,path;
     @Override
@@ -57,17 +62,17 @@ public class SearchActivity extends AppCompatActivity {
         initData();
     }
 
-    public Map<String,String> getQuery(String date,String ori, String dst){
-            Map<String,String> inputQuery = new HashMap<>();
-            inputQuery.put("date", date);
-            inputQuery.put("ori", ori);
-            inputQuery.put("dst", dst);
-        return  inputQuery;
+    public Map<String, String> getQuery(String date, String ori, String dst) {
+        Map<String, String> inputQuery = new HashMap<>();
+        inputQuery.put("date", date);
+        inputQuery.put("ori", ori);
+        inputQuery.put("dst", dst);
+        return inputQuery;
     }
 
-    public void initData(){
+    public void initData() {
         id = ori + dst + date;
-        if (id != ""){
+        if (id != "") {
 
             // set path
             final String searchPath = "/searchResult/";
@@ -75,10 +80,10 @@ public class SearchActivity extends AppCompatActivity {
             path = "/query/";
 
 
-            query = getQuery(date,ori,dst);
+            query = getQuery(date, ori, dst);
 
             DocumentReference queryRef = db.collection(searchPath).document(id);
-            Log.d("state","find : "+id);
+            Log.d("state", "find : " + id);
             queryRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -101,7 +106,20 @@ public class SearchActivity extends AppCompatActivity {
                                                     String price = document.get("price").toString();
                                                     String flyTime = document.get("flyTime").toString();
                                                     String landTime = document.get("landTime").toString();
-                                                    mSearchItems.add(new SearchItem(plane,price,ori,dst,flyTime,landTime));
+
+                                                    SearchHelper searchHelper = new SearchHelper(SearchActivity.this);
+                                                    Cursor cus = searchHelper.getAllData(plane, ori, dst, flyTime, landTime);
+                                                    if(cus.getCount() > 1){
+                                                        while(cus.moveToNext()) {
+                                                            Log.v("ttt", cus.getString(0)+" "+plane);
+                                                            Log.v("ttt", cus.getString(1)+" "+plane);
+                                                            Log.v("ttt", cus.getString(2)+" "+plane);
+                                                            Log.v("ttt", cus.getString(3)+" "+plane);
+                                                            Log.v("ttt", cus.getString(4)+" "+plane);
+                                                        }
+                                                    }
+
+                                                    mSearchItems.add(new SearchItem(plane, price, ori, dst, flyTime, landTime, false));
                                                 }
                                                 Log.d("db","search finished");
                                                 searchAdapter.notifyDataSetChanged();
@@ -138,9 +156,27 @@ public class SearchActivity extends AppCompatActivity {
                 }
             });
         } else {
-            mSearchItems.add(new SearchItem("Qatar Air","$600","DAC","SIN","17:40","23:30"));
-            mSearchItems.add(new SearchItem("Biman B.","$520","DAC","SIN","17:40","23:30"));
+            mSearchItems.add(new SearchItem("Qatar Air", "$600", "DAC", "SIN", "17:40", "23:30", false));
+            mSearchItems.add(new SearchItem("Biman B.", "$520", "DAC", "SIN", "17:40", "23:30", false));
         }
         searchAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+
+
+    }
+
+    @Override
+    public void callbackFragment() {
+        Toast.makeText(this,"yes", Toast.LENGTH_LONG).show();
     }
 }
