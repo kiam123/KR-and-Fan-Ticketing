@@ -23,7 +23,7 @@
         android:padding="26dp">
 
         <EditText
-            android:id="@+id/editToRangePrice"
+            android:id="@+id/editFromRangePrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
@@ -47,7 +47,7 @@
             android:textSize="25dp" />
 
         <EditText
-            android:id="@+id/editFromRangePrice"
+            android:id="@+id/editToRangePrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

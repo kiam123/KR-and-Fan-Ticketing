@@ -128,7 +128,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         @Override
         public void onClick(View view) {
             mSearchItem = mSearchItems.get(getLayoutPosition());
-            FavoriteChangeDialogFragment favoriteChangeDialogFragment = FavoriteChangeDialogFragment.newInstance(mFromRangePrice.getText().toString(), mToRangePrice.getText().toString());
+            FavoriteChangeDialogFragment favoriteChangeDialogFragment = FavoriteChangeDialogFragment.newInstance(mToRangePrice.getText().toString(), mFromRangePrice.getText().toString(),mSearchItem);
             favoriteChangeDialogFragment.setListener(this);
             favoriteChangeDialogFragment.show(((AppCompatActivity)mContext).getSupportFragmentManager(), "favorite");
         }

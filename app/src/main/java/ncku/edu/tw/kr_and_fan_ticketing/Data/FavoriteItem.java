@@ -1,6 +1,8 @@
 package ncku.edu.tw.kr_and_fan_ticketing.Data;
 
-public class FavoriteItem {
+import java.io.Serializable;
+
+public class FavoriteItem implements Serializable {
     String mAirName;
     String mDate;
     String mPrice;
@@ -63,6 +65,10 @@ public class FavoriteItem {
 
     public String getmUrlImage() {
         return mUrlImage;
+    }
+
+    public String getId() {
+        return mFromCountry + mToCountry + mDate + mAirName + mFromTime;
     }
 
     public void setmFromRangePrice(String mFromRangePrice) {
