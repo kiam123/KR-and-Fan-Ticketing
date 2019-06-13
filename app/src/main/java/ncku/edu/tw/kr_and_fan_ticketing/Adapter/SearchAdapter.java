@@ -9,17 +9,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import ncku.edu.tw.kr_and_fan_ticketing.Activity.SearchActivity;
-import ncku.edu.tw.kr_and_fan_ticketing.Data.SearchCallBack;
 import ncku.edu.tw.kr_and_fan_ticketing.Data.SearchItem;
 import ncku.edu.tw.kr_and_fan_ticketing.Fragment.SearchSubscriptionDiaglogFragment;
 import ncku.edu.tw.kr_and_fan_ticketing.R;
@@ -85,15 +83,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
             if(!searchItem.ismSubscription()) {
                 imageView.setImageResource(R.drawable.no_subscription);
-            } else{
+            } else {
                 imageView.setImageResource(R.drawable.subscription);
             }
-            mSearchItem = new SearchItem(mAirName.getText().toString(),searchItem.getmDate(), mPrice.getText().toString(), mFromCountry.getText().toString(),
-                    mToCountry.getText().toString(), mFromTime.getText().toString(), mToTime.getText().toString(), searchItem.ismSubscription());
         }
 
         @Override
         public void onClick(View view) {
+            mSearchItem = mSearchItems.get(getLayoutPosition());
+
             SearchSubscriptionDiaglogFragment searchSubscriptionDiaglogFragment = SearchSubscriptionDiaglogFragment.newInstance(mSearchItem);
             searchSubscriptionDiaglogFragment.show(((AppCompatActivity)mContext).getSupportFragmentManager(), "search");
         }
