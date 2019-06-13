@@ -1,6 +1,7 @@
 package ncku.edu.tw.kr_and_fan_ticketing.Activity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Fragment> fragmentArrayList;
     private TabLayout mTabLayout;
     private List<String> titles;
+    // Share Preference
+    private SharedPreferences mPreferences;
+    private String sharedPrefFile =
+            "com.example.android.sharedprefs";
     public static String userName;
     final Integer[] ICONS = new Integer[]{
             R.drawable.ic_home_white_18dp,
@@ -46,10 +51,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         View decorView = getWindow().getDecorView();
-        userName = "guest";
+
+        //
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        userName = mPreferences.getString("userName","guest");
 
         initFragment();
         initView();
+    }
+
+    public void onPause(){
+        super.onPause();
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferencesEditor.putString("userName",userName);
+        preferencesEditor.apply();
     }
 
     //初始化每個頁面的fragment

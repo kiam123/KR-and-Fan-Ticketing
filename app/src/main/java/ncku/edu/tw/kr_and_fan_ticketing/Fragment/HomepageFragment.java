@@ -51,6 +51,7 @@ public class HomepageFragment extends Fragment {
         tv_current.setText(currentName);
 
         edit_name = viewGroup.findViewById(R.id.edit_name);
+        edit_name.setText(MainActivity.userName);
 
         Button btn_change = viewGroup.findViewById(R.id.btn_change);
         btn_change.setOnClickListener(new View.OnClickListener() {
