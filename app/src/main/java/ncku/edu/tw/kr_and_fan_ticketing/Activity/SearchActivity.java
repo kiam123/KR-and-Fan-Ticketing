@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,11 +39,13 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
     Map<String, String> query;
     FirebaseFirestore db;
     String date,ori,dst,id,path;
+    TextView txvDate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        txvDate = (TextView)findViewById(R.id.txv_date);
         SearchRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         SearchRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mSearchItems = new ArrayList<>();
@@ -55,7 +58,7 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
         date = intent.getStringExtra("date");
         ori = intent.getStringExtra("ori");
         dst = intent.getStringExtra("dst");
-
+        txvDate.setText(date+" "+ori+"->"+dst);
         // get firebase
         db = FirebaseFirestore.getInstance();
         initData();
@@ -107,8 +110,6 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
                                                     String landTime = document.get("landTime").toString();
                                                     String date = document.get("date").toString();
                                                     String image = "http:"+document.get("img").toString();
-//                                                    Log.v("llll-1",image);
-//                                                    image = "http://www.gstatic.com/flights/airline_logos/70px/multi.png";
                                                     mSearchItems.add(new SearchItem(plane, "2019/06/13", date, price, ori, dst, flyTime, landTime, image, false));
                                                 }
                                                 Log.d("db","search finished");

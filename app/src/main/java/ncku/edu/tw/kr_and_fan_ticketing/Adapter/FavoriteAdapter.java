@@ -61,6 +61,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         TextView mToRangePrice;
         ImageView imgDelete;
         ImageView imgAirName;
+        TextView txvDate;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -75,6 +76,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             mToRangePrice = itemView.findViewById(R.id.to_range_price);
             imgAirName = itemView.findViewById(R.id.img_air_name);
             imgDelete = itemView.findViewById(R.id.img_delete);
+            txvDate = itemView.findViewById(R.id.txv_date);
             imgDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -96,6 +98,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             mToTime.setText(searchItem.getmToTime());
             mFromRangePrice.setText(searchItem.getmFromRangePrice());
             mToRangePrice.setText(searchItem.getmToRangePrice());
+            txvDate.setText(searchItem.getmDate());
             if(!searchItem.getmUrlImage().trim().equals("")){
                 Log.v("aaaa", searchItem.getmUrlImage());
                 Picasso.with(mContext).load(searchItem.getmUrlImage()).into(imgAirName);

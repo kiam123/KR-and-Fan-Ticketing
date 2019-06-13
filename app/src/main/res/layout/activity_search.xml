@@ -8,10 +8,12 @@
     tools:context=".Activity.SearchActivity">
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txv_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="14dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
