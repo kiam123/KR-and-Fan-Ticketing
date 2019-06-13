@@ -12,10 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import ncku.edu.tw.kr_and_fan_ticketing.Activity.MainActivity;
 import ncku.edu.tw.kr_and_fan_ticketing.Data.FavoriteItem;
 import ncku.edu.tw.kr_and_fan_ticketing.Fragment.FavoriteChangeDialogFragment;
 import ncku.edu.tw.kr_and_fan_ticketing.R;
@@ -25,6 +28,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     Context mContext;
     ArrayList<FavoriteItem> mSearchItems;
     FavoriteItem mSearchItem;
+    FirebaseFirestore db;
 
     public FavoriteAdapter(Context context, ArrayList<FavoriteItem> searchItems) {
         this.mContext = context;
@@ -49,8 +53,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         return mSearchItems.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, FavoriteChangeDialogFragment.FavoriteCallBack,
-            View.OnLongClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, FavoriteChangeDialogFragment.FavoriteCallBack {
         TextView mAirName;
         TextView mPrice;
         TextView mFromCountry;
@@ -80,13 +83,31 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             imgDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mSearchItems.remove(getLayoutPosition());
-                    notifyDataSetChanged();
+                    db = FirebaseFirestore.getInstance();
+                    FavoriteItem delItem = mSearchItems.get(getLayoutPosition());
+                    String target = getDelTarget(delItem);
+                    Log.d("db in favorite",delItem.getmAirName());
+                    String delPath = "user/" + MainActivity.userName + "/subscribe/" + target;
+                    db.document(delPath)
+                            .delete()
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("db in favorite","delete success");
+                                    // because realtime no need to remove mSearchItems
+//                                    mSearchItems.remove(getLayoutPosition());
+                                    notifyDataSetChanged();
+                                }
+                            });
                 }
             });
 
             itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(this);
+        }
+
+        public String getDelTarget(FavoriteItem delItem){
+            return delItem.getmFromCountry() + delItem.getmToCountry() + delItem.getmDate()
+                    + delItem.getmAirName() + delItem.getmFromTime();
         }
 
         void bindTo(FavoriteItem searchItem) {
@@ -111,15 +132,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             FavoriteChangeDialogFragment favoriteChangeDialogFragment = FavoriteChangeDialogFragment.newInstance(mFromRangePrice.getText().toString(), mToRangePrice.getText().toString());
             favoriteChangeDialogFragment.setListener(this);
             favoriteChangeDialogFragment.show(((AppCompatActivity)mContext).getSupportFragmentManager(), "favorite");
-        }
-
-        @Override
-        public boolean onLongClick(View view) {
-            mSearchItems.remove(getLayoutPosition());
-            Toast.makeText(mContext,"longClick",Toast.LENGTH_LONG).show();
-
-            notifyDataSetChanged();
-            return true;
         }
 
         @Override
