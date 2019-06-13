@@ -133,15 +133,16 @@ public class FavoriteFragment extends Fragment {
 
                     public void setItems(QueryDocumentSnapshot doc) {
                         String plane = doc.get("plane").toString();
+                        String date = doc.get("date").toString();
                         String price = doc.get("price").toString();
                         String flyTime = doc.get("flyTime").toString();
                         String landTime = doc.get("landTime").toString();
                         String ori = doc.get("ori").toString();
                         String dst = doc.get("dst").toString();
-                        String image = "http://www.gstatic.com/flights/airline_logos/70px/multi.png";
+                        String image = doc.get("img").toString();
                         String fromPrice = doc.get("fromPrice").toString();
                         String toPrice = doc.get("toPrice").toString();
-                        mFavoriteItems.add(new FavoriteItem(plane, "2019/06/13", price, ori, dst, flyTime, landTime, fromPrice, toPrice, image));
+                        mFavoriteItems.add(new FavoriteItem(plane, date, price, ori, dst, flyTime, landTime, fromPrice, toPrice, image));
                         mFavoriteAdapter.notifyDataSetChanged();
                         checkPrice(price,toPrice);
                     }

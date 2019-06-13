@@ -115,6 +115,7 @@ public class SearchSubscriptionDiaglogFragment extends DialogFragment {
         inputQuery.put("plane",searchItem.getmAirName());
         inputQuery.put("target",target);
         inputQuery.put("price",searchItem.getmPrice());
+        inputQuery.put("img",searchItem.getmUrlImage());
         return inputQuery;
     }
 }

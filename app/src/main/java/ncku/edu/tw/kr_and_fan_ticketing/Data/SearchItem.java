@@ -13,10 +13,10 @@ public class SearchItem implements Serializable {
     String mUrlImage;
     boolean mSubscription;
 
-    public SearchItem(String mAirName,String mdate, String mDate, String mPrice, String mFromCountry, String mToCountry, String mFromTime, String mToTime, String mUrlImage, boolean mSubscription) {
+    public SearchItem(String mAirName, String mDate, String mPrice, String mFromCountry, String mToCountry, String mFromTime, String mToTime, String mUrlImage, boolean mSubscription) {
         this.mAirName = mAirName;
-        this.mDate = mdate;
         this.mPrice = mPrice;
+        this.mDate = mDate;
         this.mFromCountry = mFromCountry;
         this.mToCountry = mToCountry;
         this.mFromTime = mFromTime;
