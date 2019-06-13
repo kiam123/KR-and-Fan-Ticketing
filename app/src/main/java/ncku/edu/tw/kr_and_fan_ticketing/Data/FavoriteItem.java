@@ -2,6 +2,7 @@ package ncku.edu.tw.kr_and_fan_ticketing.Data;
 
 public class FavoriteItem {
     String mAirName;
+    String mDate;
     String mPrice;
     String mFromCountry;
     String mToCountry;
@@ -9,9 +10,11 @@ public class FavoriteItem {
     String mToTime;
     String mFromRangePrice;
     String mToRangePrice;
+    String mUrlImage;
 
-    public FavoriteItem(String mAirName, String mPrice, String mFromCountry, String mToCountry, String mFromTime, String mToTime, String mFromRangePrice, String mToRangePrice) {
+    public FavoriteItem(String mAirName, String mDate, String mPrice, String mFromCountry, String mToCountry, String mFromTime, String mToTime, String mFromRangePrice, String mToRangePrice, String mUrlImage) {
         this.mAirName = mAirName;
+        this.mDate = mDate;
         this.mPrice = mPrice;
         this.mFromCountry = mFromCountry;
         this.mToCountry = mToCountry;
@@ -19,10 +22,15 @@ public class FavoriteItem {
         this.mToTime = mToTime;
         this.mFromRangePrice = mFromRangePrice;
         this.mToRangePrice = mToRangePrice;
+        this.mUrlImage = mUrlImage;
     }
 
     public String getmAirName() {
         return mAirName;
+    }
+
+    public String getmDate() {
+        return mDate;
     }
 
     public String getmPrice() {
@@ -51,6 +59,10 @@ public class FavoriteItem {
 
     public String getmToRangePrice() {
         return mToRangePrice;
+    }
+
+    public String getmUrlImage() {
+        return mUrlImage;
     }
 
     public void setmFromRangePrice(String mFromRangePrice) {

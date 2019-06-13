@@ -4,12 +4,15 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -57,6 +60,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
         TextView mFromRangePrice;
         TextView mToRangePrice;
         ImageView imgDelete;
+        ImageView imgAirName;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -69,6 +73,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             mToTime = itemView.findViewById(R.id.to_time);
             mFromRangePrice = itemView.findViewById(R.id.from_range_price);
             mToRangePrice = itemView.findViewById(R.id.to_range_price);
+            imgAirName = itemView.findViewById(R.id.img_air_name);
             imgDelete = itemView.findViewById(R.id.img_delete);
             imgDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -91,6 +96,10 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
             mToTime.setText(searchItem.getmToTime());
             mFromRangePrice.setText(searchItem.getmFromRangePrice());
             mToRangePrice.setText(searchItem.getmToRangePrice());
+            if(!searchItem.getmUrlImage().trim().equals("")){
+                Log.v("aaaa", searchItem.getmUrlImage());
+                Picasso.with(mContext).load(searchItem.getmUrlImage()).into(imgAirName);
+            }
         }
 
         @Override

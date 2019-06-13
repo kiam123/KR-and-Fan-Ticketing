@@ -138,9 +138,10 @@ public class FavoriteFragment extends Fragment {
                         String landTime = doc.get("landTime").toString();
                         String ori = doc.get("ori").toString();
                         String dst = doc.get("dst").toString();
+                        String image = "http://www.gstatic.com/flights/airline_logos/70px/multi.png";
                         String fromPrice = doc.get("fromPrice").toString();
                         String toPrice = doc.get("toPrice").toString();
-                        mFavoriteItems.add(new FavoriteItem(plane, price, ori, dst, flyTime, landTime, fromPrice, toPrice));
+                        mFavoriteItems.add(new FavoriteItem(plane, "2019/06/13", price, ori, dst, flyTime, landTime, fromPrice, toPrice, image));
                         mFavoriteAdapter.notifyDataSetChanged();
                         checkPrice(price,toPrice);
                     }

@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import ncku.edu.tw.kr_and_fan_ticketing.Data.SearchItem;
@@ -58,6 +60,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         TextView mFromTime;
         TextView mToTime;
         ImageView imageView;
+        ImageView imgAirName;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -69,6 +72,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             mFromTime = itemView.findViewById(R.id.from_time);
             mToTime = itemView.findViewById(R.id.to_time);
             imageView = itemView.findViewById(R.id.imageView);
+            imgAirName = itemView.findViewById(R.id.img_air_name);
 
             itemView.setOnClickListener(this);
         }
@@ -80,11 +84,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             mToCountry.setText(searchItem.getmToCountry());
             mFromTime.setText(searchItem.getmFromTime());
             mToTime.setText(searchItem.getmToTime());
-
+            Log.v("llll", searchItem.getmUrlImage());
             if(!searchItem.ismSubscription()) {
                 imageView.setImageResource(R.drawable.no_subscription);
             } else {
                 imageView.setImageResource(R.drawable.subscription);
+            }
+            if(!searchItem.getmUrlImage().trim().equals("")){
+                Log.v("aaaa", searchItem.getmUrlImage());
+                Picasso.with(mContext).load(searchItem.getmUrlImage()).into(imgAirName);
             }
         }
 
