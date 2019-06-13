@@ -150,18 +150,6 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
         searchAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
-    public void onAttachFragment(Fragment fragment) {
-        super.onAttachFragment(fragment);
-
-
-    }
 
     @Override
     public void callbackFragment() {

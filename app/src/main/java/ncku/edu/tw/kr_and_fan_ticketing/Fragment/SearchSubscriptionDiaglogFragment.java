@@ -73,7 +73,7 @@ public class SearchSubscriptionDiaglogFragment extends DialogFragment {
                 toDatabase(searchItem,fromPrice,toPrice);
 
 //                if(flag == true) {
-                Log.d("search",searchItem.getmId());
+                Log.v("search",searchItem.getmId());
                 Toast.makeText(getActivity(), "insert", Toast.LENGTH_LONG).show();
 //                }
                 searchCallBack.callbackFragment();

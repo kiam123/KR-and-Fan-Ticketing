@@ -13,28 +13,36 @@ import android.widget.EditText;
 
 import ncku.edu.tw.kr_and_fan_ticketing.R;
 
-public class FavoriteDialogFragment extends DialogFragment {
+public class FavoriteChangeDialogFragment extends DialogFragment {
+    public FavoriteCallBack favoriteCallBack;
 
-    public static FavoriteDialogFragment newInstance(String toPrice, String fromPrice) {
-        FavoriteDialogFragment favoriteDialogFragment = new FavoriteDialogFragment();
+    public void setListener(FavoriteCallBack favoriteCallBack) {
+        this.favoriteCallBack = favoriteCallBack;
+    }
+    public static interface FavoriteCallBack {
+        public void changeData(String toRangePrice, String fromRangePrice);
+    }
+
+    public static FavoriteChangeDialogFragment newInstance(String toPrice, String fromPrice) {
+        FavoriteChangeDialogFragment favoriteChangeDialogFragment = new FavoriteChangeDialogFragment();
 
         Bundle bundle = new Bundle();
         bundle.putString("toRangePrice", toPrice);
         bundle.putString("fromRangePrice", fromPrice);
-        favoriteDialogFragment.setArguments(bundle);
+        favoriteChangeDialogFragment.setArguments(bundle);
 
-        return favoriteDialogFragment;
+        return favoriteChangeDialogFragment;
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        EditText toRangePrice;
-        EditText fromRangePrice;
+        final EditText toRangePrice;
+        final EditText fromRangePrice;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_favorite_subscription, null);
+        View view = inflater.inflate(R.layout.delete_dialog_favorite_subscription, null);
         toRangePrice = (EditText)view.findViewById(R.id.editToRangePrice);
         fromRangePrice = (EditText)view.findViewById(R.id.editFromRangePrice);
         toRangePrice.setText(getArguments().getString("toRangePrice"));
@@ -44,9 +52,10 @@ public class FavoriteDialogFragment extends DialogFragment {
         builder.setView(view).setPositiveButton("確定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-
+                favoriteCallBack.changeData(toRangePrice.getText().toString(), fromRangePrice.getText().toString());
             }
         }).setNegativeButton("取消", null);
         return builder.create();
     }
+
 }

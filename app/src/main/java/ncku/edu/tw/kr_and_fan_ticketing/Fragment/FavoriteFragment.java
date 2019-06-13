@@ -219,5 +219,9 @@ public class FavoriteFragment extends Fragment {
         return notifyBuilder;
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getActivity().unregisterReceiver(subscriptionBroadcast);
+    }
 }

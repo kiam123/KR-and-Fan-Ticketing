@@ -52,4 +52,12 @@ public class FavoriteItem {
     public String getmToRangePrice() {
         return mToRangePrice;
     }
+
+    public void setmFromRangePrice(String mFromRangePrice) {
+        this.mFromRangePrice = mFromRangePrice;
+    }
+
+    public void setmToRangePrice(String mToRangePrice) {
+        this.mToRangePrice = mToRangePrice;
+    }
 }
