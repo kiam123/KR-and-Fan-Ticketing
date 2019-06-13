@@ -93,8 +93,8 @@ public class SearchSubscriptionDiaglogFragment extends DialogFragment {
         String subPath = "/user/" + MainActivity.userName + "/subscribe";
         String subId = searchItem.getmId();
         Map<String, String> query = getQuery(searchItem);
-        query.put("fromPrice",fromPrice);
-        query.put("toPrice",toPrice);
+        query.put("fromPrice","$" + fromPrice);
+        query.put("toPrice","$" +toPrice);
         db.collection(subPath).document(subId)
                 .set(query)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

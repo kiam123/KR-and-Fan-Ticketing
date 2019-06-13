@@ -2,6 +2,7 @@ package ncku.edu.tw.kr_and_fan_ticketing.Fragment;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -15,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,10 +53,11 @@ public class FavoriteFragment extends Fragment {
     static ArrayList<FavoriteItem> mFavoriteItems;
     static String showPath = "";
     static FirebaseFirestore db;
+    static FragmentActivity  favActivity ;
     static ListenerRegistration registration;
     SubscriptionBroadcast subscriptionBroadcast;
     private static final int NOTIFICATION_ID = 7000;
-    private NotificationManager mNotifyManager;
+    private static NotificationManager mNotifyManager;
     public static final String Subscription_ACTION = "Subscription_ACTION";
     private static final String PRIMARY_CHANNEL_ID ="primary_notification_channel";
     Button textButton;
@@ -79,13 +82,8 @@ public class FavoriteFragment extends Fragment {
 
         mFavoriteAdapter = new FavoriteAdapter(getActivity(), mFavoriteItems);
         mFavoriteRecyclerView.setAdapter(mFavoriteAdapter);
-        textButton = (Button) viewGroup.findViewById(R.id.button2);
-        textButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendNotification();
-            }
-        });
+        favActivity = getActivity();
+
 
 //        mFavoriteItems.add(new FavoriteItem("Qatar Air","$600","DAC","SIN","17:40","23:30","$100","$500"));
 //        mFavoriteItems.add(new FavoriteItem("Biman B.","$520","DAC","SIN","17:40","23:30","$200","$700"));
@@ -116,10 +114,6 @@ public class FavoriteFragment extends Fragment {
 
                         mFavoriteItems.clear();
 //                    for (QueryDocumentSnapshot doc : value) {
-//                        if (doc.getId() != null) {
-//                            Log.d("dbListener",doc.getId());
-//                            setItems(doc);
-//                        }
 //                    }
 
                         db.collection(path)
@@ -148,8 +142,18 @@ public class FavoriteFragment extends Fragment {
                         String toPrice = doc.get("toPrice").toString();
                         mFavoriteItems.add(new FavoriteItem(plane, price, ori, dst, flyTime, landTime, fromPrice, toPrice));
                         mFavoriteAdapter.notifyDataSetChanged();
+                        checkPrice(price,toPrice);
+                    }
+
+                    public void checkPrice(String price,String toPrice) {
+                        int intPrice = Integer.parseInt(price.split("\\$")[1].replace(",",""));
+                        int intToPrice = Integer.parseInt(toPrice.split("\\$")[1].replace(",",""));
+                        if (intPrice < intToPrice) {
+                            sendNotification();
+                        }
                     }
                 });
+
     }
 
     public static void removeSnapListener() {
@@ -193,19 +197,19 @@ public class FavoriteFragment extends Fragment {
         }
     }
 
-    public void sendNotification() {
+    public static void sendNotification() {
         NotificationCompat.Builder notifyBuilder = getNotificationBuilder();
         mNotifyManager.notify(NOTIFICATION_ID, notifyBuilder.build());
     }
 
-    private NotificationCompat.Builder getNotificationBuilder() {
-        Intent notificationIntent = new Intent(getActivity(), MainActivity.class);
+    private static NotificationCompat.Builder getNotificationBuilder() {
+        Intent notificationIntent = new Intent(favActivity, MainActivity.class);
         PendingIntent notificationPendingIntent = PendingIntent.getActivity
-                (getActivity(), NOTIFICATION_ID, notificationIntent,
+                (favActivity, NOTIFICATION_ID, notificationIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder notifyBuilder = new NotificationCompat
-                .Builder(getActivity(), PRIMARY_CHANNEL_ID)
+                .Builder(favActivity, PRIMARY_CHANNEL_ID)
                 .setContentTitle("title")
                 .setContentText("notification_text")
                 .setSmallIcon(R.mipmap.ic_launcher)
