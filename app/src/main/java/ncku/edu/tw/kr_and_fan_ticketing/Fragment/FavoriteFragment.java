@@ -210,8 +210,8 @@ public class FavoriteFragment extends Fragment {
 
         NotificationCompat.Builder notifyBuilder = new NotificationCompat
                 .Builder(favActivity, PRIMARY_CHANNEL_ID)
-                .setContentTitle("title")
-                .setContentText("notification_text")
+                .setContentTitle("Ticketing")
+                .setContentText("There some tickets meet your requirements")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true).setContentIntent(notificationPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
