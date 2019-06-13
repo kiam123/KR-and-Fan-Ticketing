@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ncku.edu.tw.kr_and_fan_ticketing.Activity.MainActivity;
+import ncku.edu.tw.kr_and_fan_ticketing.Activity.SearchActivity;
+import ncku.edu.tw.kr_and_fan_ticketing.Adapter.SearchAdapter;
 import ncku.edu.tw.kr_and_fan_ticketing.Data.SearchCallBack;
 import ncku.edu.tw.kr_and_fan_ticketing.Data.SearchItem;
 import ncku.edu.tw.kr_and_fan_ticketing.R;
@@ -54,6 +56,8 @@ public class SearchSubscriptionDiaglogFragment extends DialogFragment {
         final View view = inflater.inflate(R.layout.dialog_search_subscription, null);
         edtFromPrice = (EditText) view.findViewById(R.id.edt_from_price);
         edtToPrice = (EditText) view.findViewById(R.id.edt_to_price);
+        edtFromPrice.setText("0");
+        edtToPrice.setText("3000");
 
         builder.setView(view).setPositiveButton("確定", new DialogInterface.OnClickListener() {
             @Override
@@ -72,10 +76,9 @@ public class SearchSubscriptionDiaglogFragment extends DialogFragment {
                 String toPrice = edtToPrice.getText().toString();
                 toDatabase(searchItem,fromPrice,toPrice);
 
-//                if(flag == true) {
                 Log.v("search",searchItem.getmId());
                 Toast.makeText(getActivity(), "insert", Toast.LENGTH_LONG).show();
-//                }
+
                 searchCallBack.callbackFragment();
             }
         }).setNegativeButton("取消", null);

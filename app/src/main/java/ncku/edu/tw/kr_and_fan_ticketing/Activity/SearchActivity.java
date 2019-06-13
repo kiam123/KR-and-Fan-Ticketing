@@ -34,7 +34,7 @@ import ncku.edu.tw.kr_and_fan_ticketing.R;
 
 public class SearchActivity extends AppCompatActivity implements SearchCallBack {
     RecyclerView SearchRecyclerView;
-    SearchAdapter searchAdapter;
+    public static SearchAdapter searchAdapter;
     ArrayList<SearchItem> mSearchItems;
     Map<String, String> query;
     FirebaseFirestore db;

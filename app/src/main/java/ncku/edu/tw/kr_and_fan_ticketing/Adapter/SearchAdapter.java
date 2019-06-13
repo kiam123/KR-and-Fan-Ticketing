@@ -1,12 +1,7 @@
 package ncku.edu.tw.kr_and_fan_ticketing.Adapter;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import ncku.edu.tw.kr_and_fan_ticketing.Data.SearchItem;
+import ncku.edu.tw.kr_and_fan_ticketing.Fragment.FavoriteFragment;
 import ncku.edu.tw.kr_and_fan_ticketing.Fragment.SearchSubscriptionDiaglogFragment;
 import ncku.edu.tw.kr_and_fan_ticketing.R;
 
@@ -85,10 +81,24 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             mFromTime.setText(searchItem.getmFromTime());
             mToTime.setText(searchItem.getmToTime());
             Log.v("llll", searchItem.getmUrlImage());
-            if(!searchItem.ismSubscription()) {
-                imageView.setImageResource(R.drawable.no_subscription);
-            } else {
+            Log.d("not db", String.valueOf(FavoriteFragment.getFavoriteList().size()));
+
+            Boolean flag = false;
+            String targetNow = searchItem.getmFromCountry() + searchItem.getmToCountry() + searchItem.getmDate();
+            String planeNow = searchItem.getmAirName();
+            String fromTimeNow = searchItem.getmFromTime();
+            for (String check : FavoriteFragment.getFavoriteList()) {
+                String[] toCheck = check.split(",");
+                if (toCheck[0].equals(targetNow)) {
+                    if (toCheck[1].equals(planeNow) && toCheck[2].equals(fromTimeNow)) {
+                        flag = true;
+                    }
+                }
+            }
+            if(flag) {
                 imageView.setImageResource(R.drawable.subscription);
+            } else {
+                imageView.setImageResource(R.drawable.no_subscription);
             }
             if(!searchItem.getmUrlImage().trim().equals("")){
                 Log.v("aaaa", searchItem.getmUrlImage());

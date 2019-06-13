@@ -1,9 +1,6 @@
 package ncku.edu.tw.kr_and_fan_ticketing.Fragment;
 
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -24,7 +20,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,6 +35,7 @@ import java.util.ArrayList;
 import javax.annotation.Nullable;
 
 import ncku.edu.tw.kr_and_fan_ticketing.Activity.MainActivity;
+import ncku.edu.tw.kr_and_fan_ticketing.Activity.SearchActivity;
 import ncku.edu.tw.kr_and_fan_ticketing.Adapter.FavoriteAdapter;
 import ncku.edu.tw.kr_and_fan_ticketing.Data.FavoriteItem;
 import ncku.edu.tw.kr_and_fan_ticketing.R;
@@ -51,16 +47,15 @@ public class FavoriteFragment extends Fragment {
     RecyclerView mFavoriteRecyclerView;
     static FavoriteAdapter mFavoriteAdapter;
     static ArrayList<FavoriteItem> mFavoriteItems;
-    static String showPath = "";
     static FirebaseFirestore db;
     static FragmentActivity  favActivity ;
     static ListenerRegistration registration;
+    static ArrayList<String> favoriteList = new ArrayList<>();
     SubscriptionBroadcast subscriptionBroadcast;
     private static final int NOTIFICATION_ID = 7000;
     private static NotificationManager mNotifyManager;
     public static final String Subscription_ACTION = "Subscription_ACTION";
     private static final String PRIMARY_CHANNEL_ID ="primary_notification_channel";
-    Button textButton;
 
     public FavoriteFragment() {
     }
@@ -84,11 +79,6 @@ public class FavoriteFragment extends Fragment {
         mFavoriteRecyclerView.setAdapter(mFavoriteAdapter);
         favActivity = getActivity();
 
-
-//        mFavoriteItems.add(new FavoriteItem("Qatar Air","$600","DAC","SIN","17:40","23:30","$100","$500"));
-//        mFavoriteItems.add(new FavoriteItem("Biman B.","$520","DAC","SIN","17:40","23:30","$200","$700"));
-//        mFavoriteAdapter.notifyDataSetChanged();
-//        ckeckSubscribe();
         if (registration != null) {
             Log.d("registration", "need remove");
             removeSnapListener();
@@ -113,6 +103,7 @@ public class FavoriteFragment extends Fragment {
                         Log.d("dbListener", "change~" + MainActivity.userName);
 
                         mFavoriteItems.clear();
+                        favoriteList.clear();
 //                    for (QueryDocumentSnapshot doc : value) {
 //                    }
 
@@ -142,8 +133,13 @@ public class FavoriteFragment extends Fragment {
                         String image = doc.get("img").toString();
                         String fromPrice = doc.get("fromPrice").toString();
                         String toPrice = doc.get("toPrice").toString();
+                        String target = doc.get("target").toString();
+                        favoriteList.add(target + "," + plane + "," + flyTime);
                         mFavoriteItems.add(new FavoriteItem(plane, date, price, ori, dst, flyTime, landTime, fromPrice, toPrice, image));
                         mFavoriteAdapter.notifyDataSetChanged();
+                        if(SearchActivity.searchAdapter != null) {
+                            SearchActivity.searchAdapter.notifyDataSetChanged();
+                        }
                         checkPrice(price,toPrice);
                     }
 
@@ -156,6 +152,10 @@ public class FavoriteFragment extends Fragment {
                     }
                 });
 
+    }
+
+    public static ArrayList<String> getFavoriteList() {
+        return  favoriteList;
     }
 
     public static void removeSnapListener() {
@@ -213,7 +213,7 @@ public class FavoriteFragment extends Fragment {
         NotificationCompat.Builder notifyBuilder = new NotificationCompat
                 .Builder(favActivity, PRIMARY_CHANNEL_ID)
                 .setContentTitle("Ticketing")
-                .setContentText("There some tickets meet your requirements")
+                .setContentText("There are some tickets meet your requirements")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true).setContentIntent(notificationPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
