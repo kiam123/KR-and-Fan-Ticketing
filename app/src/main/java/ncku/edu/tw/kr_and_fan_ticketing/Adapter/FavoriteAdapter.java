@@ -85,14 +85,14 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
                     db = FirebaseFirestore.getInstance();
                     FavoriteItem delItem = mSearchItems.get(getLayoutPosition());
                     String target = getDelTarget(delItem);
-                    Log.d("db in favorite",delItem.getmAirName());
+                    Log.d("database in favorite",delItem.getmAirName());
                     String delPath = "user/" + MainActivity.userName + "/subscribe/" + target;
                     db.document(delPath)
                             .delete()
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Log.d("db in favorite","delete success");
+                                    Log.d("database in favorite","delete success");
                                     // because realtime no need to remove mSearchItems
 //                                    mSearchItems.remove(getLayoutPosition());
                                     notifyDataSetChanged();

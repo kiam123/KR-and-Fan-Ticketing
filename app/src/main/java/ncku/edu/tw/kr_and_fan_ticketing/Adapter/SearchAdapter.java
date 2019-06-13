@@ -81,7 +81,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             mFromTime.setText(searchItem.getmFromTime());
             mToTime.setText(searchItem.getmToTime());
             Log.v("llll", searchItem.getmUrlImage());
-            Log.d("not db", String.valueOf(FavoriteFragment.getFavoriteList().size()));
+            Log.d("not database", String.valueOf(FavoriteFragment.getFavoriteList().size()));
 
             Boolean flag = false;
             String targetNow = searchItem.getmFromCountry() + searchItem.getmToCountry() + searchItem.getmDate();

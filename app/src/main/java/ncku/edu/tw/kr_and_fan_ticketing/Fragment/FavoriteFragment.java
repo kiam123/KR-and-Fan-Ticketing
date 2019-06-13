@@ -80,7 +80,7 @@ public class FavoriteFragment extends Fragment {
         favActivity = getActivity();
 
         if (registration != null) {
-            Log.d("registration", "need remove");
+            Log.d("not database", "registration need remove");
             removeSnapListener();
         }
         mFavoriteItems.clear();
@@ -97,10 +97,10 @@ public class FavoriteFragment extends Fragment {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
                         if (e != null) {
-                            Log.d("dbListener", "Listen failed.");
+                            Log.d("database", "Listen failed.");
                             return;
                         }
-                        Log.d("dbListener", "change~" + MainActivity.userName);
+                        Log.d("database", "change~" + MainActivity.userName);
 
                         mFavoriteItems.clear();
                         favoriteList.clear();
@@ -114,7 +114,7 @@ public class FavoriteFragment extends Fragment {
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if (task.isSuccessful()) {
                                             for (QueryDocumentSnapshot doc : task.getResult()) {
-                                                Log.d("dbListener", doc.getId());
+                                                Log.d("database listener", doc.getId());
                                                 setItems(doc);
                                             }
                                         }

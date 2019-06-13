@@ -103,7 +103,7 @@ public class SearchSubscriptionDiaglogFragment extends DialogFragment {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("db in dia","success !");
+                        Log.d("database in dia","success !");
                     }
                 });
     }

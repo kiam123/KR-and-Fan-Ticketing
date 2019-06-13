@@ -85,14 +85,13 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
             query = getQuery(date, ori, dst);
 
             DocumentReference queryRef = db.collection(searchPath).document(id);
-            Log.d("state", "find : " + id);
             queryRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
-                            Log.d("db", "db has result:" + searchPath  + id);
+                            Log.d("database", "db has result:" + searchPath  + id);
                             mSearchItems.add(new SearchItem("Wait for database...","","","","","","","", false));
                             searchAdapter.notifyDataSetChanged();
                             db.collection(showPath)
@@ -103,7 +102,6 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
                                             if (task.isSuccessful()) {
                                                 mSearchItems.clear();
                                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                                    Log.d("db", document.get("plane").toString());
                                                     String plane = document.get("plane").toString();
                                                     String price = document.get("price").toString();
                                                     String flyTime = document.get("flyTime").toString();
@@ -112,10 +110,10 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
                                                     String image = document.get("img").toString();
                                                     mSearchItems.add(new SearchItem(plane, date, price, ori, dst, flyTime, landTime, image, false));
                                                 }
-                                                Log.d("db","search finished");
+                                                Log.d("database","search finished");
                                                 searchAdapter.notifyDataSetChanged();
                                             } else {
-                                                Log.d("db", "Error getting documents: ");
+                                                Log.d("database", "Error getting documents: ");
                                             }
                                         }
                                     });
@@ -123,26 +121,25 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
                             String image = "http://www.gstatic.com/flights/airline_logos/70px/multi.png";
                             mSearchItems.add(new SearchItem("Send query to server","","","turn back after few minute","","","", image,false));
                             searchAdapter.notifyDataSetChanged();
-                            Log.d("db", "No such document:" + searchPath  + id);
-                            Log.d("state","query : " + id);
+                            Log.d("database", "No such document:" + searchPath  + id);
 
                             db.collection(path).document(id)
                                     .set(query)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Log.d("db", "DocumentSnapshot successfully written!");
+                                            Log.d("database", "send query");
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Log.d("db", "Error writing document");
+                                            Log.d("database", "Error sending query");
                                         }
                                     });
                         }
                     } else {
-                        Log.d("db", "get failed");
+                        Log.d("database", "get failed");
                     }
                 }
             });
