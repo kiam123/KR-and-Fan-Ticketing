@@ -119,7 +119,7 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
                                     });
                         } else {
                             String image = "http://www.gstatic.com/flights/airline_logos/70px/multi.png";
-                            mSearchItems.add(new SearchItem("Send query to server","","","turn back after few minute","","","", image,false));
+                            mSearchItems.add(new SearchItem("Send query to server","","","","","turn back after few minute","", image,false));
                             searchAdapter.notifyDataSetChanged();
                             Log.d("database", "No such document:" + searchPath  + id);
 
@@ -154,6 +154,6 @@ public class SearchActivity extends AppCompatActivity implements SearchCallBack 
 
     @Override
     public void callbackFragment() {
-        Toast.makeText(this,"yes", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this,"yes", Toast.LENGTH_SHORT).show();
     }
 }
