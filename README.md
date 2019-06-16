@@ -5,7 +5,7 @@
 1.firebase  
 2.android studio  
 3.[crawler](https://github.com/WuIFan/TicketCrawler_With_FireBase)
-
+4.Picasso 
 ## Libraries
 
 ### Add in build.gradle(app)
