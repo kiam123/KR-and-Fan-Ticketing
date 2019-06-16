@@ -20,23 +20,13 @@
 
         <ImageView
             android:id="@+id/img_air_name"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:text="to"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_air_name" />
-
+            app:layout_constraintTop_toTopOf="parent"/>
+        <!--app:srcCompat="@drawable/common_google_signin_btn_icon_dark"-->
         <TextView
             android:id="@+id/air_name"
             android:layout_width="wrap_content"

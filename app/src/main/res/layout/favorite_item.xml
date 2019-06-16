@@ -127,14 +127,13 @@
 
         <ImageView
             android:id="@+id/img_air_name"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_marginTop="5dp"
             app:layout_constraintEnd_toStartOf="@+id/to_country"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toEndOf="@+id/from_country"
-            app:layout_constraintTop_toBottomOf="@+id/txv_date"
-            app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+            app:layout_constraintTop_toBottomOf="@+id/txv_date" />
 
     </android.support.constraint.ConstraintLayout>
 
