@@ -4,7 +4,8 @@
 
 1.firebase  
 2.android studio  
-3.[crawler](https://github.com/WuIFan/TicketCrawler_With_FireBase)
+3.[crawler](https://github.com/WuIFan/TicketCrawler_With_FireBase)  
+
 ## Libraries
 
 ### Add in build.gradle(app)
@@ -40,4 +41,7 @@ Nexus 5X API 28 9.0
 1. P76977086 [李儒錦](https://github.com/kiam123) : 50%  
 2. P76071179 [吳一凡](https://github.com/WuIFan)  : 50%  
 
+### For demo
+
 [PPT](https://docs.google.com/presentation/d/1_7Rxz29IJenLgbTiVHL8YfTBDpoQJY7gbl31a3Db0nc/edit?usp=sharing)  
+[APK](./Ticketing.apk)  
