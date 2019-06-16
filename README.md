@@ -5,7 +5,6 @@
 1.firebase  
 2.android studio  
 3.[crawler](https://github.com/WuIFan/TicketCrawler_With_FireBase)
-4.Picasso 
 ## Libraries
 
 ### Add in build.gradle(app)
@@ -15,6 +14,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation 'com.google.firebase:firebase-database:17.0.0'
     implementation 'com.google.firebase:firebase-firestore:19.0.2'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 }
 apply plugin: 'com.google.gms.google-services'
 ```
