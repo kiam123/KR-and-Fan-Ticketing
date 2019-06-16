@@ -11,7 +11,6 @@ from firebase_admin import firestore
 def getPageSource(ori,dst,date):
     driver = webdriver.Chrome(executable_path=r'./chromedriver')
     web = "https://www.google.com/flights?hl=zh-TW#flt=" + ori +"." + dst + "." + date + ";c:TWD;e:1;sd:1;t:f;tt:o"
-    #web = "https://www.google.com/flights?hl=zh-TW#flt=" + ori +"." + dst + "." + go
     # driver.get('https://www.google.com/flights?hl=zh-TW#flt=TPE.GUM.2019-06-25*GUM.TPE.2019-06-29;c:TWD;e:1;sd:1;t:f')
     driver.get(web)
     pageSource = driver.page_source
@@ -22,24 +21,29 @@ def getPageSource(ori,dst,date):
 
 def getData(soup,target,db):
     result = soup.find_all("div", class_ = "gws-flights-results__collapsed-itinerary gws-flights-results__itinerary")
+    print ("Get...")
     for plan in result :
         data = {}
         try:
             flyTime,landTime = getTime(plan)
             data = {
-                'target' : target,
+                'target' : target["id"],
                 'plane' : getPlane(plan),
                 'flyTime' : flyTime,
                 'landTime' : landTime,
                 'durationTime' : getDuration(plan),
                 'price' : getPrice(plan).strip(),
-                'img' : getImg(plan)
+                'img' : getImg(plan),
+                'ori' : target["ori"],
+                'dst' : target["dst"],
+                'date' : target["date"]
             }
             
-            print(data)
             addDatabase(data,db)
-        except IndexError:
+        except IndexError as e:
+            # print (e)
             continue
+    print ("Done...")
 
 def addDatabase(data,db):
     path = "searchResult/" + data['target'] + "/tickets"
@@ -70,7 +74,7 @@ def getPrice(plan):
     price = plan.select("div.gws-flights-results__price")[0].text
     return price
 def getImg(plan):
-    img = plan.find('img')['src']
+    img = "http:" + plan.find('img')['src']
     return img
 
 def initDatabase():
@@ -79,32 +83,55 @@ def initDatabase():
     db = firestore.client()
     return db
 
-def SearchQuery():
+def searchQuery():
     path = "query"
     querys = db.collection(path).get()
-    i = 0
     for query in querys:
         print (query.id)
         date = query.get("date")
         ori = query.get("ori")
         dst = query.get("dst")
-        target = ori + dst + date 
-
-        #print (target)
-
+        target = {
+            "id" : ori + dst + date,
+            "ori" : ori,
+            "dst" : dst,
+            "date" : date
+        } 
         soup = getPageSource(ori,dst,date)
         getData(soup,target,db)
 
-if __name__ == '__main__': 
+def checkSub():
+    path = "user"
+    users = db.collection(path).get()
+    for user in users:
+        subPath = path + "/" + user.id + "/subscribe"
+        subs = db.collection(subPath).get()
+        for sub in subs:
+            dataPath = "searchResult/" + sub.get("target") + "/tickets/" + sub.get("plane") + ":" + sub.get("flyTime");
+            oldPath = subPath + "/" + sub.id
+            data = db.document(dataPath).get().to_dict()
+            oldData = db.document(oldPath)
+            oldData.update(data)
+            print(oldData.id)
+            # print(data)
+
+def testCrawl():
+    ori = "TPE"
+    dst = "KUL"
+    date = "2019-07-01"
+    target = {
+            "id" : ori + dst + date,
+            "ori" : ori,
+            "dst" : dst,
+            "date" : date
+    }
+    soup = getPageSource(ori,dst,date)
+    getData(soup,target,db)
+
+if __name__ == '__main__':
     db = initDatabase()
-    # ori = "TPE"
-    # dst = "KUL"
-    # date = "2019-07-11"
-    # target = ori + dst + date 
-    # soup = getPageSource(ori,dst,date)
-    # getData(soup,target,db)
-    SearchQuery()
-
-
     
-    
+    # testCrawl()
+
+    searchQuery()
+    checkSub()
