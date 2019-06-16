@@ -1,14 +1,14 @@
 # Flight Ticketing
 
-## tools
+## Tools
 
 1.firebase  
 2.android studio  
 3.[crawler](https://github.com/WuIFan/TicketCrawler_With_FireBase)
 
-## libraries
+## Libraries
 
-### add in build.gradle(app)
+### Add in build.gradle(app)
 
 ```gradle
 dependencies {
@@ -19,13 +19,13 @@ dependencies {
 apply plugin: 'com.google.gms.google-services'
 ```
 
-### add in build.gradle
+### Add in build.gradle
 
 ```gradle
 classpath 'com.google.gms:google-services:4.2.0'
 ```
 
-## platform
+## Platform
 
 ### API
 
@@ -37,5 +37,7 @@ Nexus 5X API 28 9.0
 
 ## Team member
 
-1. P76977086 [李儒錦](https://github.com/kiam123)
-2. P76071179 [吳一凡](https://github.com/WuIFan)  
+1. P76977086 [李儒錦](https://github.com/kiam123) : 50%  
+2. P76071179 [吳一凡](https://github.com/WuIFan)  : 50%  
+
+[PPT](https://docs.google.com/presentation/d/1_7Rxz29IJenLgbTiVHL8YfTBDpoQJY7gbl31a3Db0nc/edit?usp=sharing)  
