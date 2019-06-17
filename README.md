@@ -41,7 +41,29 @@ Nexus 5X API 28 9.0
 1. P76977086 [李儒錦](https://github.com/kiam123) : 50%  
 2. P76071179 [吳一凡](https://github.com/WuIFan)  : 50%  
 
-### For demo
+## For demo
 
-[PPT](https://docs.google.com/presentation/d/1_7Rxz29IJenLgbTiVHL8YfTBDpoQJY7gbl31a3Db0nc/edit?usp=sharing)  
-[APK](./Ticketing.apk)  
+### Content
+
+1.[PPT](https://docs.google.com/presentation/d/1_7Rxz29IJenLgbTiVHL8YfTBDpoQJY7gbl31a3Db0nc/edit?usp=sharing) 
+2.[APK](./Ticketing.apk)  
+
+### Description  
+
+1.初始頁面可以用來搜尋機票，但是機票的database是用爬蟲建出來的，如果查詢還沒爬過的機票會顯示  
+"send query to server, turn back after after few minute"  
+但是目前並沒有讓server固定跑爬蟲，而是手動執行，如果要更新可能要通知我們  
+2.第二頁(愛心)是已訂閱的機票，如果database有更新，且價錢有符合，會送通知給使用者，一樣在demo時必須手動更新database，才能控制價錢的更新
+3.目前可以查詢到的機票  
+```
+TPEGUM2019-07-01
+TPEGUM2019-07-02
+TPEGUM2019-07-03
+TPEGUM2019-07-04
+TPEGUM2019-07-06
+TPEGUM2019-07-07
+TPEKUL2019-07-01
+TPEKUL2019-07-02
+TPEKUL2019-07-03
+TPEKUL2019-07-04
+```
