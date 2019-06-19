@@ -1,5 +1,9 @@
 # Flight Ticketing
 
+## Update
+
+20190619 Hot Fix : error on subscribe to no result  
+
 ## Tools
 
 1.firebase  

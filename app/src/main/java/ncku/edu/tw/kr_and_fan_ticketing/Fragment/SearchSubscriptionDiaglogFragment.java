@@ -68,6 +68,9 @@ public class SearchSubscriptionDiaglogFragment extends DialogFragment {
                     Toast.makeText(getActivity(), "Please input price", Toast.LENGTH_LONG).show();
                     return;
                 }
+                if (searchItem.getmToCountry() == "") {
+                    return;
+                }
 
 //                boolean flag = searchHelper.insertData(searchItem.getmAirName(), searchItem.getmFromCountry(), searchItem.getmToCountry(),
 //                        searchItem.getmFromTime(), searchItem.getmToTime(), searchItem.getmPrice(), edtFromPrice.getText().toString(),
